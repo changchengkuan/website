@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大學生個人自我介紹與報名表</title>
+    <style>
+        /* CSS 樣式設定 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #bec6ce, #c2a62c);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            padding: 40px 30px;
+            margin: 20px;
+        }
+
+        /* 大頭貼照樣式 */
+        .photo-container {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #74b9ff;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 姓名、標題 */
+        h1 {
+            font-size: 26px;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        /* 班級與座號標籤 */
+        .info-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background-color: #dfe6e9;
+            color: #636e72;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge.highlight {
+            background-color: #ffeaa7;
+            color: #d63031;
+        }
+
+        /* 共通區塊樣式（關於我與表單） */
+        .bio, .registration-section {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #636e72;
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .bio h2, .registration-section h2 {
+            color: #2d3436;
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* 表單內部欄位排版 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .required {
+            color: #d63031;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #fff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #0984e3;
+            outline: none;
+            box-shadow: 0 0 5px rgba(9, 132, 227, 0.3);
+        }
+
+        /* 送出按鈕 */
+        .submit-btn {
+            width: 100%;
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 5px;
+        }
+
+        .submit-btn:hover {
+            background-color: #74b9ff;
+        }
+
+        /* 社群連結導覽列 */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            background-color: #636e72;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: #2d3436;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="card">
+        
+        <!-- 個人頭像與基本身分區 -->
+        <header>
+            <div class="photo-container">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="個人照">
+            </div>
+
+            <h1>xxx</h1>
+
+            <div class="info-badges">
+                <span class="badge">資訊管理系 資訊二甲</span>
+                <span class="badge highlight">學號:3B4320xx</span>
+            </div>
+        </header>
+
+        <!-- 關於我 -->
+        <section class="bio">
+            <h2>👋 關於我</h2>
+            <p>嗨！我是xxx，目前就讀於大學。個性外向、喜歡交朋友，對網頁前端開發與設計很有熱忱。課餘時間喜歡打籃球、聽音樂以及探索各種新科技產品！</p>
+        </section>
+
+        <!-- 活動報名表單區段 -->
+        <section class="registration-section">
+            <h2>📝 活動線上報名</h2>
+            <form id="regForm" onsubmit="handleFormSubmit(event)">
+                
+                <div class="form-group">
+                    <label for="className">班級 <span class="required">*</span></label>
+                    <input type="text" id="className" name="className" required placeholder="例：資訊二甲">
+                </div>
+
+                <div class="form-group">
+                    <label for="studentId">學號 <span class="required">*</span></label>
+                    <input type="text" id="studentId" name="studentId" required placeholder="例：3B4320xx">
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">姓名 <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="請輸入真實姓名">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">電子郵件 <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="example@domain.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">聯絡電話 <span style="font-weight: normal; color: #888;">(選填)</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="例：0912345678">
+                </div>
+
+                <button type="submit" class="submit-btn">確認報名</button>
+            </form>
+        </section>
+
+        <!-- 外部連結導覽列 -->
+        <nav class="social-links" aria-label="社群與聯絡連結">
+            <a href="mailto:your_email@example.com">聯絡信箱</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+    </main>
+
+    <script>
+        // 簡單的表單送出防跳轉與提示
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('fullName').value;
+            alert(`感謝 ${name} 同學！您的報名資料已成功送出。`);
+            document.getElementById('regForm').reset();
+        }
+    </script>
+
+</body>
+</html>
