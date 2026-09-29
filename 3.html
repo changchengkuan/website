@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大學生個人自我介紹</title>
+    <style>
+        /* CSS 樣式設定 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #bec6ce, #c2a62c);
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 整個網站右上角的頁籤切換按鈕 */
+        .tab-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .tab-btn {
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s;
+        }
+
+        .tab-btn:hover:not(:disabled) {
+            background-color: #74b9ff;
+        }
+
+        .tab-btn:disabled {
+            background-color: #0984e3;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        /* 使用 Flexbox 排版的主要容器，設定間距為 10cm */
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            gap: 10cm;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            padding: 40px 30px;
+        }
+
+        /* 內容區塊預設隱藏 */
+        .tab-content {
+            display: none;
+        }
+
+        /* 當內容區塊啟用時顯示 */
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 大頭貼照樣式 */
+        .photo-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #74b9ff;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 姓名、標題 */
+        h1 {
+            font-size: 28px;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        /* 班級與座號標籤 */
+        .info-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background-color: #dfe6e9;
+            color: #636e72;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge.highlight {
+            background-color: #ffeaa7;
+            color: #d63031;
+        }
+
+        /* 自我介紹內文 */
+        .bio {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #636e72;
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .bio h3 {
+            color: #2d3436;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        /* 表單樣式設計 */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #2d3436;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dfe6e9;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0984e3;
+            box-shadow: 0 0 5px rgba(9, 132, 227, 0.3);
+        }
+
+        /* 錯誤提示訊息樣式 */
+        .error-message {
+            color: #d63031;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error input {
+            border-color: #d63031;
+            background-color: #fff5f5;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .submit-btn {
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #74b9ff;
+        }
+
+        /* 聯絡方式 / 社群按鈕 */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            background-color: #0984e3;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: #74b9ff;
+        }
+
+        /* 響應式網頁設計 (RWD) */
+        @media (max-width: 768px) {
+            .main-container {
+                gap: 2rem;
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 整個網站右上角的頁籤切換按鈕 -->
+    <div class="tab-buttons">
+        <button class="tab-btn" id="btn-bio" onclick="switchTab('bio')" disabled>自我介紹</button>
+        <button class="tab-btn" id="btn-form" onclick="switchTab('form')">個人資訊填寫</button>
+        <button class="tab-btn" id="btn-contact" onclick="switchTab('contact')">聯絡我</button>
+    </div>
+
+    <!-- Flexbox 主容器 -->
+    <div class="main-container">
+        <div class="card">
+            <!-- 區塊 1：自我介紹 -->
+            <div id="content-bio" class="tab-content active">
+                <div class="photo-container">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="個人照">
+                </div>
+                <h1>xxx</h1>
+                <div class="info-badges">
+                    <span class="badge">資訊管理系 資訊二甲</span>
+                    <span class="badge highlight">學號:3B4320xx</span>
+                </div>
+                <div class="bio">
+                    <h3>👋 關於我</h3>
+                    <p>嗨！我是xxx，目前就讀於大學。個性外向、喜歡交朋友，對網頁前端開發與設計很有熱忱。課餘時間喜歡打籃球、聽音樂以及探索各種新科技產品！</p>
+                </div>
+            </div>
+
+            <!-- 區塊 2：填寫表單 -->
+            <div id="content-form" class="tab-content">
+                <div class="bio" style="text-align: left;">
+                    <h3>📝 個人資訊填寫</h3>
+                    <p style="margin-bottom: 15px; font-size: 13px; color: #b2bec3;">請確實填寫以下所有欄位（皆為必填）</p>
+                    <form id="info-form" novalidate onsubmit="handleFormSubmit(event)">
+                        
+                        <div class="form-group" id="group-class">
+                            <label for="class-name">班級：</label>
+                            <input type="text" id="class-name" name="class" placeholder="例如：資訊二甲">
+                            <div class="error-message" id="error-class">請輸入正確的班級（例如：資訊二甲）</div>
+                        </div>
+
+                        <div class="form-group" id="group-name">
+                            <label for="full-name">姓名：</label>
+                            <input type="text" id="full-name" name="name" placeholder="例如：王小明">
+                            <div class="error-message" id="error-name">請輸入真實姓名（至少2個中英文字元）</div>
+                        </div>
+
+                        <div class="form-group" id="group-student-id">
+                            <label for="student-id">學號：</label>
+                            <input type="text" id="student-id" name="student_id" placeholder="例如：3B4320xx">
+                            <div class="error-message" id="error-student-id">請輸入正確的學號格式（例如：3B4320xx）</div>
+                        </div>
+
+                        <div class="form-group" id="group-phone">
+                            <label for="phone">電話：</label>
+                            <input type="tel" id="phone" name="phone" placeholder="例如：0912345678">
+                            <div class="error-message" id="error-phone">請輸入正確的 10 碼手機號碼（例如：0912345678）</div>
+                        </div>
+
+                        <div class="form-group" id="group-email">
+                            <label for="email">電子郵件：</label>
+                            <input type="email" id="email" name="email" placeholder="例如：your_email@example.com">
+                            <div class="error-message" id="error-email">請輸入有效的電子郵件格式</div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">送出表單</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 區塊 3：聯絡我 -->
+            <div id="content-contact" class="tab-content">
+                <div class="bio" style="text-align: center;">
+                    <h3>📞 與我聯繫</h3>
+                    <p style="margin-bottom: 20px;">如果你對我的作品有興趣或想進一步交流，歡迎透過以下方式找到我！</p>
+                    <div class="social-links">
+                        <a href="mailto:your_email@example.com">聯絡信箱</a>
+                        <a href="https://github.com" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            const btnBio = document.getElementById('btn-bio');
+            const btnForm = document.getElementById('btn-form');
+            const btnContact = document.getElementById('btn-contact');
+            
+            const contentBio = document.getElementById('content-bio');
+            const contentForm = document.getElementById('content-form');
+            const contentContact = document.getElementById('content-contact');
+
+            // 移除所有啟用狀態
+            contentBio.classList.remove('active');
+            contentForm.classList.remove('active');
+            contentContact.classList.remove('active');
+
+            btnBio.disabled = false;
+            btnForm.disabled = false;
+            btnContact.disabled = false;
+
+            // 依照點擊項目啟用對應區塊與按鈕
+            if (tabName === 'bio') {
+                contentBio.classList.add('active');
+                btnBio.disabled = true;
+            } else if (tabName === 'form') {
+                contentForm.classList.add('active');
+                btnForm.disabled = true;
+            } else if (tabName === 'contact') {
+                contentContact.classList.add('active');
+                btnContact.disabled = true;
+            }
+        }
+
+        // 驗證與提交表單邏輯
+        function handleFormSubmit(event) {
+            event.preventDefault(); // 阻擋預設送出行為
+
+            const className = document.getElementById('class-name').value.trim();
+            const fullName = document.getElementById('full-name').value.trim();
+            const studentId = document.getElementById('student-id').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            let isValid = true;
+
+            // 1. 班級驗證（不可空白）
+            if (className === '') {
+                setError('group-class', 'error-class', '班級欄位不得為空白');
+                isValid = false;
+            } else {
+                clearError('group-class');
+            }
+
+            // 2. 姓名驗證（至少 2 個字）
+            if (fullName === '' || fullName.length < 2) {
+                setError('group-name', 'error-name', '請輸入真實姓名（至少 2 個字元）');
+                isValid = false;
+            } else {
+                clearError('group-name');
+            }
+
+            // 3. 學號驗證（通常為英數字組合，例如 3B4320xx 或長度符合規範）
+            const studentIdRegex = /^[0-9][A-Za-z0-9]{4,}$/; // 簡易範例：數字開頭的 5 碼以上英數字
+            if (!studentIdRegex.test(studentId)) {
+                setError('group-student-id', 'error-student-id', '學號格式不符（需為首位數字的英數字組合，如：3B4320xx）');
+                isValid = false;
+            } else {
+                clearError('group-student-id');
+            }
+
+            // 4. 電話驗證（台灣手機號碼格式：09 開頭共 10 碼）
+            const phoneRegex = /^09\d{8}$/;
+            if (!phoneRegex.test(phone)) {
+                setError('group-phone', 'error-phone', '請輸入正確的台灣手機號碼（例如：0912345678）');
+                isValid = false;
+            } else {
+                clearError('group-phone');
+            }
+
+            // 5. 電子郵件驗證
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                setError('group-email', 'error-email', '電子郵件格式錯誤（例如：your_email@example.com）');
+                isValid = false;
+            } else {
+                clearError('group-email');
+            }
+
+            // 如果全部驗證通過
+            if (isValid) {
+                alert('表單已成功送出！');
+                document.getElementById('info-form').reset();
+            }
+        }
+
+        function setError(groupId, errorId, message) {
+            const group = document.getElementById(groupId);
+            const errorElem = document.getElementById(errorId);
+            group.classList.add('error');
+            errorElem.textContent = message;
+        }
+
+        function clearError(groupId) {
+            const group = document.getElementById(groupId);
+            group.classList.remove('error');
+        }
+    </script>
+
+</body>
+</html>
